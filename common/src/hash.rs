@@ -132,7 +132,7 @@ pub fn hash_float(value: f64) -> Option<PyHash> {
 
 pub fn hash_bigint(value: &BigInt) -> PyHash {
     let ret = match value.to_i64() {
-        Some(i) => i,
+        Some(i) => mod_int(i),
         None => (value % MODULUS).to_i64().unwrap_or_else(|| unsafe {
             // SAFETY: MODULUS < i64::MAX, so value % MODULUS is guaranteed to be in the range of i64
             std::hint::unreachable_unchecked()
